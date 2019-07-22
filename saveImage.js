@@ -28,8 +28,18 @@ function savePic(videoElementID, fileName) {
   canvas.height = video.videoHeight;
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);  // 图片大小和视频分辨率一致
   var strDataURL = canvas.toDataURL("image/" + fileType);   // canvas中video中取一帧图片并转成dataURL
-  
-  var url = strDataURL;
+  var arr = strDataURL.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  var blob = new Blob([u8arr], {
+    type: mime
+  });
+  var url = window.URL.createObjectURL(blob);
   var a = document.createElement('a');
   a.style.display = 'none';
   a.href = url;
@@ -40,5 +50,4 @@ function savePic(videoElementID, fileName) {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   }, 1000);
-  alert(url)
 }
