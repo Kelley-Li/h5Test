@@ -50,5 +50,5 @@ function savePic(videoElementID, fileName) {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   }, 1000);
-
+  alert(url)
 }
