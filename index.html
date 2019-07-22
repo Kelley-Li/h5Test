@@ -5,38 +5,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>h5相机测试</title>
+  <link rel="stylesheet" href="./index.css">
 </head>
 
 <body>
-  <!-- <input id="fileBtn" type="file" onchange="upload('#fileBtn', '#img');" accept="image/*" capture="camera" />
-  <img src="" id="img" /> -->
+  <div class="box-view">
+    <section class="camera">
+      <div class="nav">看这里看这里</div>
+      <video class="video-view"></video>
+    </section>
+  
+    <section class="btn-group">
+      <span class="btn" onclick="alert('按钮1')">按钮1</span>
+      <span class="btn" onclick="save()">拍照</span>
+      <span class="btn" onclick="alert('按钮3')">按钮3</span>
+    </section>
+  </div>
 
-  <video></video>
+  <script src="./rem.js"></script>
+  <script src="./saveImage.js"></script>
   <script>
-    // var upload = function (c, d) {
-    //   "use strict";
-    //   var $c = document.querySelector(c),
-    //     $d = document.querySelector(d),
-    //     file = $c.files[0],
-    //     reader = new FileReader();
-    //   reader.readAsDataURL(file);
-    //   reader.onload = function (e) {
-    //     $d.setAttribute("src", e.target.result);
-    //   };
-    // };
-
-    var constraints = { audio: true, video: { width: 1280, height: 720 } }; 
+    var video = document.querySelector('video');
+    var w = video.clientWidth;
+    var h = video.clientHeight;
+    var constraints = { audio: true, video: { width: w, height: h } }; 
 
     navigator.mediaDevices.getUserMedia(constraints)
     .then(function(mediaStream) {
-      var video = document.querySelector('video');
       video.srcObject = mediaStream;
       video.onloadedmetadata = function(e) {
         video.play();
       };
     })
     .catch(function(err) { console.log(err.name + ": " + err.message); });
+
+    function save() {
+      savePic('.video-view');
+      alert('下载成功')
+    }
   </script>
 </body>
 
