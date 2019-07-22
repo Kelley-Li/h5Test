@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <input id="fileBtn" type="file" onchange="upload('#fileBtn', '#img');" accept="image/*" capture="camera" />
+  <img src="" id="img" /> -->
+
+  <video></video>
+  <script>
+    // var upload = function (c, d) {
+    //   "use strict";
+    //   var $c = document.querySelector(c),
+    //     $d = document.querySelector(d),
+    //     file = $c.files[0],
+    //     reader = new FileReader();
+    //   reader.readAsDataURL(file);
+    //   reader.onload = function (e) {
+    //     $d.setAttribute("src", e.target.result);
+    //   };
+    // };
+
+    var constraints = { audio: true, video: { width: 1280, height: 720 } }; 
+
+    navigator.mediaDevices.getUserMedia(constraints)
+    .then(function(mediaStream) {
+      var video = document.querySelector('video');
+      video.srcObject = mediaStream;
+      video.onloadedmetadata = function(e) {
+        video.play();
+      };
+    })
+    .catch(function(err) { console.log(err.name + ": " + err.message); });
+  </script>
+</body>
+
+</html>
